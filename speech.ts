@@ -118,7 +118,9 @@ process.on("unhandledRejection", (err: any) => {
 });
 
 console.log(
-  "export GOOGLE_APPLICATION_CREDENTIALS=" + __dirname + "/ai-helper.json"
+  "export GOOGLE_APPLICATION_CREDENTIALS=" +
+    __dirname +
+    "/config/googleconfig.json"
 );
 
 bumblebee.on("hotword", async function (hotword) {
