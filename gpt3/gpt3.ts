@@ -1,11 +1,11 @@
 import { Configuration, OpenAIApi } from "openai";
 
 import { apikey } from "../config/config.json";
-import axios from "axios";
 
 const configuration = new Configuration({
   apiKey: apikey,
 });
+
 const openai = new OpenAIApi(configuration);
 
 export const gpt3 = async (

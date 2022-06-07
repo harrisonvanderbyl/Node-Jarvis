@@ -1,16 +1,6 @@
-import Mp3 from "js-mp3";
-import PCM from "pcm";
-import { Readable } from "stream";
-import Speaker from "speaker";
 import { TextToSpeechClient } from "@google-cloud/text-to-speech";
 import { exec } from "child_process";
 import { writeFileSync } from "fs";
-
-let speaker = new Speaker({
-  channels: 1, // 2 channels
-  bitDepth: 16, // 16-bit samples
-  sampleRate: 44100, // 44,100 Hz sample rate
-});
 
 const client = new TextToSpeechClient();
 
@@ -60,12 +50,6 @@ export async function fileToSpeaker(filename: string) {
     exec("cvlc " + filename + " --play-and-exit", () => res());
   });
 }
-
-// wordsToFile(
-//   `I am listening <say-as interpret-as="expletive">beep</say-as>`,
-//   "en-US-Wavenet-B",
-//   "./Listening.mp3"
-// );
 
 export async function say(words: string): Promise<void> {
   console.log("starting speaker", words);
