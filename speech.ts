@@ -6,6 +6,7 @@ import Bumblebee from "bumblebee-hotword-node";
 import { SpeechClient } from "@google-cloud/speech";
 import { exec } from "child_process";
 import { executeCommand } from "./speech/executeCommand";
+import { existsSync } from "fs";
 import { gpt3 } from "./gpt3/gpt3";
 
 // Add credentials path to shell variables
@@ -121,11 +122,18 @@ process.on("unhandledRejection", (err: any) => {
   process.exitCode = 1;
 });
 
-console.log(
-  "export GOOGLE_APPLICATION_CREDENTIALS=" +
-    __dirname +
-    "/config/googleconfig.json"
-);
+if (!existsSync(__dirname + "/config/googleconfig.json")) {
+  console.log(
+    "Please create a googleconfig.json file in the config folder with your google credentials"
+  );
+  process.exit(1);
+}
+if (!existsSync(__dirname + "/config/config.json")) {
+  console.log(
+    "Please create a config.json file in the config folder with your openai credentials"
+  );
+  process.exit(1);
+}
 
 bumblebee.on("hotword", async function (hotword) {
   //bumblebee.stop();
