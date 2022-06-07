@@ -8,6 +8,10 @@ import { exec } from "child_process";
 import { executeCommand } from "./speech/executeCommand";
 import { gpt3 } from "./gpt3/gpt3";
 
+// Add credentials path to shell variables
+process.env.GOOGLE_APPLICATION_CREDENTIALS =
+  __dirname + "/config/googleconfig.json";
+
 const bumblebee = new Bumblebee();
 
 bumblebee.addHotword("jarvis");
@@ -138,5 +142,4 @@ bumblebee.on("hotword", async function (hotword) {
     "for SINK in `pacmd list-sink-inputs | grep 'index:' | cut -b12-`; do   pactl set-sink-input-volume $SINK +70%; done"
   );
 });
-
 bumblebee.start();

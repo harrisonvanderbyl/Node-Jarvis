@@ -18,15 +18,7 @@ you should also create a "config.json" file in the config folder with the gpt3 k
 }
 ```
 
-You should also have a "googleconfig.json" file in the config folder that contains your google api json download.
-
-You will need to export the file path as such:
-
-```bash
-export GOOGLE_APPLICATION_CREDENTIALS=path-to-json-file
-```
-
-The program will prompt you on the correct path when started
+You should also have a "googleconfig.json" file in the config folder that contains your google api keys json download.
 
 You should activate the "Text to speech" and "Speech to text" APIs in your google account.
 
