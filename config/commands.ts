@@ -8,9 +8,7 @@ export const customCommands: {
     callback?: (err: any, data: any) => any
   ) => void;
 } = {
-  chromium: (args, callback = () => {}) =>
-    exec("chromium '" + args + "'", callback),
-  chrome: (args, callback = () => {}) =>
+  chrom: (args, callback = () => {}) =>
     exec("chromium '" + args + "'", callback),
   firefox: (args, callback = () => {}) => exec("firefox " + args, callback),
   // Move mouse
@@ -85,19 +83,18 @@ export const customCommands: {
   "open-text-editor": (args, callback = () => {}) =>
     exec("gedit " + args, callback),
 
-  "create-picture-of": (args, callback = () => {}) => {
+  "paint-a-painting-of": (args, callback = () => {}) => {
     WomboDreamApi.buildDefaultInstance()
       .generatePicture(args, 10, (task: { [key: string]: any }) => {
         console.log(task.state, "stage", task.photo_url_list.length);
       })
       .then(async (task: { [key: string]: any }) => {
-        //console.log(task?.result.final);
         exec(
           'curl "' +
             task?.result.final +
-            '" --output ./temp.jpeg && bash eog ./temp.jpeg'
+            '" --output ./temp.jpeg && eog ./temp.jpeg &',
+          callback
         );
-        callback(null, null);
       })
       .catch((err) => {
         console.error(err);
