@@ -1,31 +1,42 @@
-# RavenBot
+# Node-Jarvis
 
-RavenBot is a Discord Bot designed to help the users and author of the [Alexander Wales](http://alexanderwales.com/) server, with features related to his story Worth the Candle.
+Node-Jarvis is a programmable personal assistant that runs on various AI services, Google speech ⇄ text services, and OpenaAI Gpt3.
 
 ## Installation
 
-It's just a Node bot using [Discord.js](https://discord.js.org/). Its installation process is simple, download and install its dependencies.
+It's a node-typescript project, install the yarn dependencies with
 
 ```bash
-npm install
+yarn install
 ```
+
+you should also create a "config.json" file in the config folder with the gpt3 key
+
+```
+{
+    "apikey": YOUR_GPT3_API_KEY,
+}
+```
+
+You should also have a "googleconfig.json" file in the config folder that contains your google api json download.
+
+You should activate the "Text to speech" and "Speech to text" APIs in your google account.
 
 ## Usage
-I run this using [PM2](https://pm2.keymetrics.io), which watches the file for changes and restarts it if it crashes. The process I use for debugging is something like the following.
+
+Start the script with
 
 ```bash
-pm2 start index.js --watch
-pm2 logs index.js
+node-ts ./speech.ts
 ```
 
-For further reference, check the [PM2 documentation](https://pm2.keymetrics.io/docs/usage/quick-start/).
+Wake with "Hey Jarvis"
 
-## Contributing
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+Jarvis will respond, and ask for more information if needed. If it decides it has enough information, it will try and parse your command by activating one of the methods specified in ./speech/executeCommand.ts
 
-### Roadmap
-Features I would like to add in the future are listed below:
-* A search feature that doesn't suck (would probably require tagging and processing all chapters of the story by hand)
+If Jarvis is not confident that it can parse the command, you can use
+"Thank You" anywhere in your wording to end the conversation and force Jarvis to attempt to parse the command.
 
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+
+Personal I guess, not sure

@@ -2,10 +2,16 @@ config.json
 credentials.json
 token.json
 logs.txt
+.build
+gpt.json
+offline.json
+googleconfig.json
+gpt.json
+mmo-starter/
 
 files/
 .node-persist/
-
+.aws.json
 # Logs
 logs
 *.log

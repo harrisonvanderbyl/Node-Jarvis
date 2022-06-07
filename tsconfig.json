@@ -1,0 +1,33 @@
+{
+    "compilerOptions": {
+        "preserveConstEnums": true,
+        "inlineSources": true,
+        "inlineSourceMap": true,
+        "sourceRoot": "/",
+        "target": "es2020",
+        "lib": ["es2020"],
+        "outDir": ".build",
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "skipLibCheck": true,
+        "allowSyntheticDefaultImports": true,
+        "incremental": true
+    
+    },
+    "include": [
+        "./index.ts",
+        "./speech.ts",
+        "./config",
+        "./gpt3",
+        "./speech"
+    ],
+    "exclude": [
+        "node_modules",
+        "mmo-starter"
+        
+    ]
+    ,
+    
+}
