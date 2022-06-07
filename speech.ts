@@ -18,9 +18,10 @@ const bumblebee = new Bumblebee();
 bumblebee.addHotword("jarvis");
 
 var history = `Jarvis is a helpful AI. It has full control over a linux machine,
-When it needs clarification for a task, it will ask and append [ExpectedReply] to the end of its message, otherwise, it will instead append [ExecuteCommand] to the end of its message.
-If there is no need to run a command, it will simply not append anything.
+If it needs to ask a question, it will append [ExpectedReply] to the end of its message,
+If its ready to try complete the task, it will append [ExecuteCommand] instead. Jarvis is very confident, so this is used often.
 Jarvis is very creative, and has a fun personality.
+He has the ability to draft short stories in notepad, paint pictures, and open websites and videos.
               
 `;
 
@@ -57,18 +58,25 @@ const transcriber = (controller, finish, mem = "") =>
 
         if (text.includes("thank you")) {
           executeCommand(mem + newDetails + "Jarvis is happy to help");
-          return;
+          return finish();
         }
 
         gpt3(command, "(Harrison)").then(async (res) => {
-          if (res.data.choices[0].text.includes("ExecuteCommand")) {
-            executeCommand(
+          if (
+            res.data.choices[0].text.includes("ExecuteCommand") ||
+            res.data.choices[0].text
+              .replace("ExpectedReply", "")
+              .replace("[]", "")
+              .trim() === ""
+          ) {
+            await executeCommand(
               mem +
                 newDetails +
                 res.data.choices[0].text
                   .replace("ExecuteCommand", "")
                   .replace("ExpectedReply", "")
             );
+            return finish();
           }
           await say(
             res.data.choices[0].text

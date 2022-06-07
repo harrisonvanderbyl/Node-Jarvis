@@ -40,7 +40,7 @@ export const customCommands: {
   //   exec("xdotool scroll " + args, callback),
   // Type text
   "xdotool-type": (args, callback = () => {}) =>
-    exec('xdotool type "' + args.replace('"', "") + '"', callback),
+    exec("xdotool type '" + args + "'", callback),
   // open teams
   teams: (_args = null, callback = () => {}) => exec("teams", callback),
   // open slack
@@ -82,16 +82,22 @@ export const customCommands: {
   "xdotool-key": (args, callback = () => {}) =>
     exec("xdotool key " + args, callback),
   // Open text editor
-  "gedit-text-editor": (args, callback = () => {}) =>
+  "open-text-editor": (args, callback = () => {}) =>
     exec("gedit " + args, callback),
 
-  "paint-picture-of": (args, callback = () => {}) => {
+  "create-picture-of": (args, callback = () => {}) => {
     WomboDreamApi.buildDefaultInstance()
       .generatePicture(args, 10, (task: { [key: string]: any }) => {
         console.log(task.state, "stage", task.photo_url_list.length);
       })
       .then(async (task: { [key: string]: any }) => {
-        exec("chrome " + task?.result.final, callback);
+        //console.log(task?.result.final);
+        exec(
+          'curl "' +
+            task?.result.final +
+            '" --output ./temp.jpeg && bash eog ./temp.jpeg'
+        );
+        callback(null, null);
       })
       .catch((err) => {
         console.error(err);
