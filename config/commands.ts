@@ -1,3 +1,5 @@
+import * as WomboDreamApi from "wombo-dream-api";
+
 import { exec } from "child_process";
 
 export const customCommands: {
@@ -82,4 +84,18 @@ export const customCommands: {
   // Open text editor
   "gedit-text-editor": (args, callback = () => {}) =>
     exec("gedit " + args, callback),
+
+  "paint-picture-of": (args, callback = () => {}) => {
+    WomboDreamApi.buildDefaultInstance()
+      .generatePicture(args, 10, (task: { [key: string]: any }) => {
+        console.log(task.state, "stage", task.photo_url_list.length);
+      })
+      .then(async (task: { [key: string]: any }) => {
+        exec("chrome " + task?.result.final, callback);
+      })
+      .catch((err) => {
+        console.error(err);
+        callback(err, null);
+      });
+  },
 };
