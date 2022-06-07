@@ -17,10 +17,10 @@ const bumblebee = new Bumblebee();
 
 bumblebee.addHotword("jarvis");
 
-var history = `Jarvis is a helpful AI. It has control over a laptop, with control over media commands, and the terminal
+var history = `Jarvis is a helpful AI. It has full control over a linux machine,
 When it needs clarification for a task, it will ask and append [ExpectedReply] to the end of its message, otherwise, it will instead append [ExecuteCommand] to the end of its message.
 If there is no need to run a command, it will simply not append anything.
-Jarvis is also very good at writing battle scenes and short stories.
+Jarvis is very creative, and has a fun personality.
               
 `;
 
