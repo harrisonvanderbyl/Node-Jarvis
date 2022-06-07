@@ -1,7 +1,7 @@
 import { customCommands } from "../config/commands";
-import { exec } from "child_process";
 import { gpt3 } from "../gpt3/gpt3";
 
+// Turn commands into promises
 const promisify = <T extends typeof customCommands>(
   obj: T
 ): {
@@ -19,6 +19,7 @@ const promisify = <T extends typeof customCommands>(
       [key in keyof T]: (args: string) => Promise<any>;
     }
   );
+
 const commands = promisify(customCommands);
 
 const myprompt = (convo) =>
@@ -30,7 +31,10 @@ example: chrome(https://google.com)
 convo to interpret: (${convo})
 
 command Result:`;
-const delay = (ms) => new Promise((res) => setTimeout(res, ms));
+
+// Promiselike delay function
+const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
+
 export const executeCommand = async (convo) => {
   return gpt3(myprompt(convo)).then(async (res) => {
     for (const command of res.data.choices[0].text.split("\n")) {
