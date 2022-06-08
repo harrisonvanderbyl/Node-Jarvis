@@ -1,6 +1,9 @@
 import { TextToSpeechClient } from "@google-cloud/text-to-speech";
 import { exec } from "child_process";
 import { writeFileSync } from "fs";
+// Add credentials path to shell variables
+process.env.GOOGLE_APPLICATION_CREDENTIALS =
+  __dirname + "/../config/googleconfig.json";
 
 const client = new TextToSpeechClient();
 

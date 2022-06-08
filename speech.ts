@@ -2,7 +2,6 @@
 process.env.GOOGLE_APPLICATION_CREDENTIALS =
   __dirname + "/config/googleconfig.json";
 
-
 import * as recorder from "node-record-lpcm16";
 
 import { fileToSpeaker, say } from "./speech/synth";
@@ -14,20 +13,13 @@ import { executeCommand } from "./speech/executeCommand";
 import { existsSync } from "fs";
 import { gpt3 } from "./gpt3/gpt3";
 
-
-
-
-
 const bumblebee = new Bumblebee();
 
 bumblebee.addHotword("jarvis");
 
-var history = `Jarvis is a helpful AI. It has full control over a linux machine,
-If it needs to ask a question, it will append [ExpectedReply] to the end of its message,
-If its ready to try complete the task, it will append [ExecuteCommand] instead. Jarvis is very confident, so this is used often.
-Jarvis is very creative, and has a fun personality.
+var history = `Jarvis is very creative, and has a fun personality.
 He has the ability to draft short stories in notepad, paint pictures, and open websites and videos.
-              
+He will include [ExpectedReply] at the end of questions, and [ExecuteCommand] to start doing things.
 `;
 
 const config = {
@@ -43,6 +35,7 @@ const request = {
 
 // Creates a client
 const client = new SpeechClient();
+const flags = { currentlySpeaking: false };
 
 const transcriber = (controller, finish, mem = "") =>
   client
@@ -62,7 +55,7 @@ const transcriber = (controller, finish, mem = "") =>
         const command = history + mem + newDetails;
 
         if (text.includes("thank you")) {
-          executeCommand(mem + newDetails + "Jarvis is happy to help");
+          executeCommand(mem + newDetails + "happy to help");
           return finish();
         }
 
@@ -149,6 +142,12 @@ if (!existsSync(__dirname + "/config/config.json")) {
 }
 
 bumblebee.on("hotword", async function (hotword) {
+  console.log("Hotword detected: " + hotword);
+
+  if (flags.currentlySpeaking) {
+    return;
+  }
+  flags.currentlySpeaking = true;
   //bumblebee.stop();
   exec(
     "for SINK in `pacmd list-sink-inputs | grep 'index:' | cut -b12-`; do   pactl set-sink-input-volume $SINK -70%; done"
@@ -162,5 +161,6 @@ bumblebee.on("hotword", async function (hotword) {
   exec(
     "for SINK in `pacmd list-sink-inputs | grep 'index:' | cut -b12-`; do   pactl set-sink-input-volume $SINK +70%; done"
   );
+  flags.currentlySpeaking = false;
 });
 bumblebee.start();
