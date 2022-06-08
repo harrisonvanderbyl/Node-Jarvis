@@ -12,27 +12,27 @@ export const customCommands: {
     exec("chromium '" + args + "'", callback),
   firefox: (args, callback = () => {}) => exec("firefox " + args, callback),
   // Move mouse
-  "xdotool-mousemove": (args, callback = () => {}) =>
-    exec("xdpyinfo | grep dimensions: | awk '{print $2}'", (err, data) => {
-      exec(
-        "xdotool mousemove " +
-          args
-            .replace("%", "")
-            .split(",")
-            .join(" ")
-            .split(" ")
-            .filter((w) => w.length)
-            .map((p, i) =>
-              ((Number(p) / 100.0) * Number(data.split("x")[i])).toFixed(0)
-            )
-            .join(" "),
-        callback
-      );
-    }),
+  //   "xdotool-mousemove": (args, callback = () => {}) =>
+  //     exec("xdpyinfo | grep dimensions: | awk '{print $2}'", (err, data) => {
+  //       exec(
+  //         "xdotool mousemove " +
+  //           args
+  //             .replace("%", "")
+  //             .split(",")
+  //             .join(" ")
+  //             .split(" ")
+  //             .filter((w) => w.length)
+  //             .map((p, i) =>
+  //               ((Number(p) / 100.0) * Number(data.split("x")[i])).toFixed(0)
+  //             )
+  //             .join(" "),
+  //         callback
+  //       );
+  //     }),
 
   // Click mouse
-  "xdotool-mouse-click": (args, callback = () => {}) =>
-    exec("xdotool click " + args, callback),
+  //   "xdotool-mouse-click": (args, callback = () => {}) =>
+  //     exec("xdotool click " + args, callback),
   // Scroll mouse
   // "xdotool-scroll": (args, callback = () => {}) =>
   //   exec("xdotool scroll " + args, callback),

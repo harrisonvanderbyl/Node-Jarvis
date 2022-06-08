@@ -47,11 +47,16 @@ export const executeCommand = async (convo) => {
         console.log("no command found");
         continue;
       }
+
       const commandArgs = command
-        .toLowerCase()
-        .replace(foundCommand.toLowerCase(), "")
         .trim()
-        .replace(/\(|\)/g, "");
+        .split("(")
+        .slice(1)
+        .join(")")
+        .split(")")
+        .slice(0, -1)
+        .join(")")
+        .trim();
 
       console.log(commandArgs);
       await commands[foundCommand](commandArgs);

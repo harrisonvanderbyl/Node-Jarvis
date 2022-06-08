@@ -1,3 +1,8 @@
+// Add credentials path to shell variables
+process.env.GOOGLE_APPLICATION_CREDENTIALS =
+  __dirname + "/config/googleconfig.json";
+
+
 import * as recorder from "node-record-lpcm16";
 
 import { fileToSpeaker, say } from "./speech/synth";
@@ -9,9 +14,9 @@ import { executeCommand } from "./speech/executeCommand";
 import { existsSync } from "fs";
 import { gpt3 } from "./gpt3/gpt3";
 
-// Add credentials path to shell variables
-process.env.GOOGLE_APPLICATION_CREDENTIALS =
-  __dirname + "/config/googleconfig.json";
+
+
+
 
 const bumblebee = new Bumblebee();
 
