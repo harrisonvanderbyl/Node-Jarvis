@@ -1,6 +1,7 @@
 import * as WomboDreamApi from "wombo-dream-api";
 
 import { exec } from "child_process";
+import { say } from "../speech/synth";
 
 export const customCommands: {
   [key: string]: (
@@ -9,8 +10,12 @@ export const customCommands: {
   ) => void;
 } = {
   chrom: (args, callback = () => {}) =>
-    exec("chromium '" + args + "'", callback),
-  firefox: (args, callback = () => {}) => exec("firefox " + args, callback),
+    exec("chromium '" + args.replace('"', "") + "'", callback),
+  firefox: (args, callback = () => {}) =>
+    exec('firefox "' + args.replace('"', "") + '"', callback),
+  "youtube-url": (args, callback = () => {}) =>
+    exec("chromium '" + args.replace('"', "") + "'", callback),
+
   // Move mouse
   //   "xdotool-mousemove": (args, callback = () => {}) =>
   //     exec("xdpyinfo | grep dimensions: | awk '{print $2}'", (err, data) => {
@@ -39,6 +44,10 @@ export const customCommands: {
   // Type text
   "xdotool-type": (args, callback = () => {}) =>
     exec("xdotool type '" + args + "'", callback),
+  // Say text out loud
+  "say-out-loud": (args, callback = () => {}) =>
+    say(args) && callback(null, null),
+
   // open teams
   teams: (_args = null, callback = () => {}) => exec("teams", callback),
   // open slack
@@ -81,7 +90,7 @@ export const customCommands: {
     exec("xdotool key " + args, callback),
   // Open text editor
   "open-text-editor": (args, callback = () => {}) =>
-    exec("gedit " + args, callback),
+    exec("gedit " + args) && callback(null, null),
 
   "paint-a-painting-of": (args, callback = () => {}) => {
     WomboDreamApi.buildDefaultInstance()
