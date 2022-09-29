@@ -8,6 +8,9 @@ It's a node-typescript project, install the yarn dependencies with
 
 ```bash
 yarn install
+sudo apt install sox
+pip install git+https://github.com/openai/whisper.git
+sudo apt install ffmpeg
 ```
 
 you should also create a "config.json" file in the config folder with the gpt3 key
