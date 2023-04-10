@@ -40,7 +40,7 @@ export const synthesize = async (
 
 export async function wordsToFile(
   words: string,
-  name = "en-US-Wavenet-G",
+  name = "en-US-Neural2-C",
   filename: string
 ) {
   const audio = await synthesize(words, name);
@@ -49,16 +49,16 @@ export async function wordsToFile(
 }
 
 export async function fileToSpeaker(filename: string) {
-  return new Promise<void>(async (res, reject) => {
-    exec("cvlc " + filename + " --play-and-exit", () => res());
-  });
+  // play audi file (windows)
+  exec(`start ${filename}`);
+  
 }
 
 export async function say(words: string): Promise<void> {
   console.log("starting speaker", words);
 
   // Save words to temp file
-  await wordsToFile(words, "en-GB-Wavenet-B", "./temp.mp3");
+  await wordsToFile(words, "en-US-Neural2-C", "./temp.mp3");
 
   // Play the audio using the speaker
   await fileToSpeaker("./temp.mp3");

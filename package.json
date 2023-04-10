@@ -4,7 +4,8 @@
   "description": "Retrieves a variety of data for the story 'Worth the Candle' by Alexander Wales.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "yarn run ts-node speech.ts"
   },
   "keywords": [],
   "author": "Makin",
@@ -25,12 +26,14 @@
     "mee6-levels-api": "^1.3.0",
     "node-fetch": "^3.2.4",
     "node-gyp": "8",
+    "node-mp3-player": "^1.0.3",
     "node-persist": "^2.1.0",
     "node-record-lpcm16": "^1.0.1",
     "openai": "^2.0.5",
     "pcm": "^1.0.3",
     "showdown": "^1.9.1",
     "speaker": "^0.5.4",
+    "ts-node": "^10.9.1",
     "turndown": "^6.0.0",
     "typescript": "^4.7.2",
     "wombo-dream-api": "^0.1.5"
